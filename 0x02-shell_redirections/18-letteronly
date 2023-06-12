@@ -1,2 +1,3 @@
 #!/bin/bash
-grep "^[a-z]" /etc/ssh/sshd_config
+grep ^[[:alpha:]] /etc/ssh/sshd_config
+
