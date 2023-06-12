@@ -1,2 +1,2 @@
 #!/bin/bash
-tail -n 1  >> iatca
+tail -n 1 iatca  >> iatca
