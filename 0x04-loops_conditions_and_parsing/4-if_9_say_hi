@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Displays "Best School" 10 times and says "Hi" on the 9th iteration
+
+i=1
+
+while [ $i -le 10 ]; do
+    if [ $i -eq 9 ]; then
+        echo "Best School"
+        echo "Hi"
+    else
+        echo "Best School"
+    fi
+    i=$((i+1))
+done
+
