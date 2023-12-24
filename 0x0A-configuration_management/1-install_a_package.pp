@@ -1,22 +1,8 @@
 # 1-install_a_package.pp
 
-class { 'python':
-  version => 'system',
-}
-
-class { 'python::pip':
-  ensure => 'latest',
-}
+# Puppet manifest to install Flask package (version 2.1.0) using pip3
 
 package { 'Flask':
   ensure   => '2.1.0',
   provider => 'pip',
-  require  => Class['python::pip'],
 }
-
-package { 'Werkzeug':
-  ensure   => '2.1.1',
-  provider => 'pip',
-  require  => Class['python::pip'],
-}
-
