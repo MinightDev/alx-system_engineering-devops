@@ -14,3 +14,9 @@ package { 'Flask':
   require  => Class['python::pip'],
 }
 
+package { 'Werkzeug':
+  ensure   => '2.1.1',
+  provider => 'pip',
+  require  => Class['python::pip'],
+}
+
