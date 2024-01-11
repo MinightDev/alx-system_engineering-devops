@@ -1,41 +1,17 @@
 #!/usr/bin/env bash
-# This script displays information about subdomains of a given domain
-
-get_record_type() {
-    local domain=$1
-    local subdomain=$2
-    local record_type=$(dig ${subdomain}.${domain} | awk '/ANSWER SECTION:/{getline; print $4}')
-    echo ${record_type:-"N/A"}
-}
-
-get_destination() {
-    local domain=$1
-    local subdomain=$2
-    local destination=$(dig ${subdomain}.${domain} | awk '/ANSWER SECTION:/{getline; print $5}')
-    echo ${destination:-"N/A"}
-}
+# shellcheck disable=SC2086
+# display information about subdomains
 
 display_info() {
-    local domain=$1
-    local subdomain=$2
-    local record_type=$(get_record_type ${domain} ${subdomain})
-    local destination=$(get_destination ${domain} ${subdomain})
-    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
+    domain="$1"
+    subdomain="$2"
+    dig "$subdomain.$domain" | awk '/ANSWER SECTION:/{getline; printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$subdomain"
 }
 
-main() {
-    local domain=$1
-    local subdomain=$2
-
-    if [ -z "${subdomain}" ]; then
-        subdomains=("www" "lb-01" "web-01" "web-02")
-        for sub in "${subdomains[@]}"; do
-            display_info ${domain} ${sub}
-        done
-    else
-        display_info ${domain} ${subdomain}
+for subdomain in "www" "lb-01" "web-01" "web-02"
+do
+    if [ -z "$2" ] || [ "$2" == "$subdomain" ]; then
+        display_info "$1" "$subdomain"
     fi
-}
-
-main "$@"
+done
 
