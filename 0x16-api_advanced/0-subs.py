@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Queries the Reddit API and returns the number of subscribers for
+"""
+Queries the Reddit API and returns the number of subscribers for
 a given subreddit.
 """
 
@@ -23,6 +24,7 @@ def number_of_subscribers(subreddit):
     response = requests.get(url, headers=headers, allow_redirects=False)
     if response.status_code >= 300:
         return 0
-
     data = response.json()
+    if 'error' in data or 'message' in data:
+        return 0
     return data.get('data', {}).get('subscribers', 0)
